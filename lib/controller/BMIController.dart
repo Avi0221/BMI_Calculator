@@ -1,59 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/widgets.dart';
 
-class BmiController extends GetxController{
+class BmiController extends GetxController {
+
+  // Observable variables
   RxString Gender = "MALE".obs;
-  RxInt Weight = 12.obs;
-  RxInt Age = 12.obs;
-  RxDouble Height = 100.0.obs;
+  RxInt Weight = 60.obs;
+  RxInt Age = 20.obs;
+  RxDouble Height = 170.0.obs;
+
   RxString BMI = "".obs;
   RxDouble tempBMI = 0.0.obs;
+
   RxString BMIstatus = "".obs;
-  Rx<Color> colorStatus = Color(0xff246AFE).obs;
+  Rx<Color> colorStatus = const Color(0xff246AFE).obs;
 
 
-
-  void genderHandle(String gender){
+  // Update gender
+  void genderHandle(String gender) {
     Gender.value = gender;
-
   }
+
+
+  // BMI Calculation
   void CalculatBMI() {
-    var Hmeter = Height/100;
-    tempBMI.value = Weight / (Hmeter*Hmeter);
-    BMI.value = tempBMI.toStringAsFixed(1);
-    tempBMI.value = double.parse(BMI.value);
+    double heightMeter = Height.value / 100;
+
+    double bmi = Weight.value / (heightMeter * heightMeter);
+
+    BMI.value = bmi.toStringAsFixed(1);
+    tempBMI.value = bmi;
+
     findStatus();
-    print(BMI);
   }
 
-  void findStatus()
-  {
-    if(tempBMI.value <18.5)
-    {
-      BMIstatus.value = "UnderWeight";
-      colorStatus.value = Color(0xffFFB800);
-    }
-    if(tempBMI.value >18.5 && tempBMI.value <24.9 )
-    {
-      BMIstatus.value = "Normal";
-      colorStatus.value = Color(0xff00CA39);
-    }
-    if(tempBMI.value >25.0 && tempBMI.value <29.9 )
-    {
-      BMIstatus.value = "OverWeight";
-      colorStatus.value = Color(0xffFF5858);
-    }
-    if(tempBMI.value >30.0 && tempBMI.value <34.9 )
-    {
-      BMIstatus.value = "OBESE";
-      colorStatus.value = Color(0xffFF0000);
-    }
-    if(tempBMI.value > 35.0)
-    {
-      BMIstatus.value = "Extremely OBESE";
 
-      colorStatus.value = Color(0xff000000);
+  // Detect BMI Status
+  void findStatus() {
+    double bmi = tempBMI.value;
+
+    if (bmi < 18.5) {
+      BMIstatus.value = "Underweight";
+      colorStatus.value = const Color(0xffFFB800);
+    }
+    else if (bmi >= 18.5 && bmi <= 24.9) {
+      BMIstatus.value = "Normal";
+      colorStatus.value = const Color(0xff00CA39);
+    }
+    else if (bmi >= 25 && bmi <= 29.9) {
+      BMIstatus.value = "Overweight";
+      colorStatus.value = const Color(0xffFF5858);
+    }
+    else if (bmi >= 30 && bmi <= 34.9) {
+      BMIstatus.value = "Obese (Class I)";
+      colorStatus.value = const Color(0xffFF0000);
+    }
+    else if (bmi >= 35) {
+      BMIstatus.value = "Extremely Obese";
+      colorStatus.value = const Color(0xff000000);
     }
   }
 }
