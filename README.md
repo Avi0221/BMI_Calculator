@@ -38,14 +38,10 @@ The app calculates BMI based on height, weight, age, and gender, and provides he
 
 ## 📸 **Screenshots**
 
-*Add screenshots here after uploading in your repo:*
-
-```
 /assets/screens/HomePage(Light).png
 /assets/screens/ResultPage(Light).png
 /assets/screens/HomePage(dark).png
 /assets/screens/HomePage(dark).png
-```
 
 ---
 
